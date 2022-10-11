@@ -1,5 +1,12 @@
 const invalidValue = "a";
 
+const singleProduct = { name: "Traje de encolhimento" };
+
+const newProductResponse = {
+  id: 1,
+  name: "Traje de encolhimento",
+};
+
 const allProducts = [
   {
     id: 1,
@@ -14,4 +21,6 @@ const allProducts = [
 module.exports = {
   allProducts,
   invalidValue,
+  singleProduct,
+  newProductResponse,
 };
