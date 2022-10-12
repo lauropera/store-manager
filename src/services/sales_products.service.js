@@ -1,5 +1,6 @@
 const productsModel = require('../models/products.model');
 const salesProductsModel = require('../models/sales_products.model');
+const salesService = require('./sales.service');
 const { validateNewSale } = require('./validations/validationsInputValues');
 
 const doesProductsExist = async (productsToSale) => {
@@ -16,19 +17,19 @@ const validateSale = (saleInformations) => {
   return validationError || { type: null, message: '' };
 };
 
-const createNewSale = async (saleInformations, saleId) => {
+const createNewSale = async (saleInformations) => {
   const validationResult = validateSale(saleInformations);
   if (validationResult.type) return validationResult;
 
   const productsIdValidation = await doesProductsExist(saleInformations);
 
   if (productsIdValidation) {
+    const saleId = await salesService.newSaleRegistry();
     const createAllSales = saleInformations.map((sale) =>
-      salesProductsModel.insert({ saleId, ...sale }));
-
+    salesProductsModel.insert({ saleId, ...sale }));
+    
     await Promise.all(createAllSales);
     const sale = await salesProductsModel.findById(saleId);
-    console.log(sale);
     return { type: null, message: sale };
   }
 
