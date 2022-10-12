@@ -1,4 +1,4 @@
-const { addProductSchema } = require('./schema');
+const { addProductSchema, newSaleSchema } = require('./schema');
 
 const validateNewProduct = (productName) => {
   const { error } = addProductSchema.validate(productName);
@@ -6,6 +6,20 @@ const validateNewProduct = (productName) => {
   return { type: null, message: '' };
 };
 
+const validateNewSale = (sale) => {
+  const { error } = newSaleSchema.validate(sale);
+  if (error) {
+    return {
+      type: error.message.includes('greater than')
+        ? 'INVALID_VALUE'
+        : 'MISSING_FIELD',
+      message: error.message,
+    };
+  }
+  return { type: null, message: '' };
+};
+
 module.exports = {
   validateNewProduct,
+  validateNewSale,
 };
