@@ -9,7 +9,6 @@ const {
   allProducts,
   newProductResponse,
   singleProduct,
-  invalidProduct,
 } = require("../mocks/productsMock");
 
 const productsServices = require("../../../src/services/products.service.js");
