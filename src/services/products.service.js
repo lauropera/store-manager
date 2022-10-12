@@ -12,11 +12,11 @@ const findById = async (productId) => {
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
-const addNewProduct = async (productName) => {
-  const error = await validateNewProduct(productName);
+const addNewProduct = async (product) => {
+  const error = await validateNewProduct(product);
   if (error.type) return error;
 
-  const newProductId = await productsModel.insert(productName);
+  const newProductId = await productsModel.insert(product);
   const newProduct = await productsModel.findById(newProductId);
   return { type: null, message: newProduct };
 };

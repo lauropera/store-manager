@@ -48,13 +48,12 @@ describe("Service tests from products", function () {
       expect(result.message).to.deep.equal(newProductResponse);
     });
 
-    it("fails if the name does not exist", async function () {
-      // sinon.stub(productsModel, "insert").resolves([{ insertId: 1 }]);
-      // sinon.stub(productsModel, "findById").resolves(newProductResponse);
-
-      const result = await productsServices.addNewProduct({});
-      expect(result.type).to.equal("MISSING_FIELD");
-      expect(result.message).to.deep.equal('"name" is required');
+    it("fails if the name has invalid length", async function () {
+      const result = await productsServices.addNewProduct(invalidProduct);
+      expect(result.type).to.equal("INVALID_VALUE");
+      expect(result.message).to.deep.equal(
+        '"name" length must be at least 5 characters long'
+      );
     });
   });
 
