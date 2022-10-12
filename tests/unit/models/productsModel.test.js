@@ -6,7 +6,6 @@ const productsModel = require("../../../src/models/products.model.js");
 const {
   allProducts,
   singleProduct,
-  newProductResponse,
 } = require("../mocks/productsMock");
 
 describe("Unit tests from products model", function () {

@@ -9,6 +9,7 @@ const {
   allProducts,
   newProductResponse,
   singleProduct,
+  invalidProduct,
 } = require("../mocks/productsMock");
 
 const productsServices = require("../../../src/services/products.service.js");
@@ -81,6 +82,22 @@ describe("Controller tests from products", function () {
 
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(newProductResponse);
+  });
+
+  it("fails if the name does not exist", async function () {
+    const res = {};
+    const req = { body: {} };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsServices, "addNewProduct")
+      .resolves({ type: "MISSING_FIELD", message: '"name" is required' });
+
+    await productsController.addNewProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
   });
 
   afterEach(sinon.restore);

@@ -8,6 +8,7 @@ const {
   invalidValue,
   newProductResponse,
   singleProduct,
+  invalidProduct,
 } = require("../mocks/productsMock");
 
 describe("Service tests from products", function () {
@@ -45,6 +46,15 @@ describe("Service tests from products", function () {
       const result = await productsServices.addNewProduct(singleProduct);
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(newProductResponse);
+    });
+
+    it("fails if the name does not exist", async function () {
+      // sinon.stub(productsModel, "insert").resolves([{ insertId: 1 }]);
+      // sinon.stub(productsModel, "findById").resolves(newProductResponse);
+
+      const result = await productsServices.addNewProduct({});
+      expect(result.type).to.equal("MISSING_FIELD");
+      expect(result.message).to.deep.equal('"name" is required');
     });
   });
 
