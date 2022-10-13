@@ -20,12 +20,10 @@ const allProducts = [
   },
 ];
 
-const editedProduct = { name: "Martelo do Batman" };
+const editedProduct = { id: 1, name: "Martelo do Batman" };
 
-const editedProductResponse = {
-  id: 1,
-  name: "Martelo do Batman",
-};
+const invalidProductIdEdit = { id: 999999, name: "Fantasia" };
+const invalidProductNameEdit = { id: 1, name: invalidValue };
 
 module.exports = {
   allProducts,
@@ -34,5 +32,6 @@ module.exports = {
   newProductResponse,
   invalidProduct,
   editedProduct,
-  editedProductResponse,
+  invalidProductIdEdit,
+  invalidProductNameEdit,
 };

@@ -3,12 +3,14 @@ const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/products.controller');
 
-const validateNewProductFields = require('../middlewares/validateNewProductFields');
+const validateProductNameField = require('../middlewares/validateProductNameField');
 
 router.get('/', productsController.listProducts);
 
 router.get('/:id', productsController.getProduct);
 
-router.post('/', validateNewProductFields, productsController.addNewProduct);
+router.post('/', validateProductNameField, productsController.addNewProduct);
+
+router.put('/:id', validateProductNameField, productsController.editProduct);
 
 module.exports = router;

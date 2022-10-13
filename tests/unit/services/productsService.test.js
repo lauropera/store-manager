@@ -10,7 +10,8 @@ const {
   singleProduct,
   invalidProduct,
   editedProduct,
-  editedProductResponse,
+  invalidProductIdEdit,
+  invalidProductNameEdit,
 } = require("../mocks/productsMock");
 
 describe("Unit tests from products service", function () {
@@ -62,20 +63,27 @@ describe("Unit tests from products service", function () {
   describe("editing a product", function () {
     it("updates a product with success", async function () {
       sinon.stub(productsModel, "update").resolves({ affectedRows: 1 });
-      sinon.stub(productsModel, "findById").resolves(editedProductResponse);
+      sinon.stub(productsModel, "findById").resolves(allProducts[0]);
 
       const result = await productsServices.editProduct(editedProduct);
       expect(result.type).to.equal(null);
-      expect(result.message).to.equal(editedProductResponse);
+      expect(result.message).to.equal(editedProduct);
     });
 
     it("fails if the productId is invalid", async function () {
       sinon.stub(productsModel, "update").resolves(undefined);
       sinon.stub(productsModel, "findById").resolves(undefined);
 
-      const result = await productsServices.editProduct(invalidValue);
+      const result = await productsServices.editProduct(invalidProductIdEdit);
       expect(result.type).to.equal("PRODUCT_NOT_FOUND");
       expect(result.message).to.equal("Product not found");
+    });
+
+    it("fails if the name is invalid", async function () {
+      const result = await productsServices.editProduct(invalidProductNameEdit);
+      expect(result.message).to.equal(
+        '"name" length must be at least 5 characters long'
+      );
     });
   });
 

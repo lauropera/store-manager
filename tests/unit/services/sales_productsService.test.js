@@ -71,7 +71,7 @@ describe("Unit tests from sales_products service", function () {
     });
   });
 
-  describe("finding for a sale", function () {
+  describe("searching for a sale", function () {
     it("finds a new sale", async function () {
       sinon.stub(salesProductsModel, "findById").resolves(allSalesProducts[0]);
 
