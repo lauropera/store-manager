@@ -60,5 +60,38 @@ describe("Unit tests from sales controller", function () {
     });
   });
 
+  describe("removing a sale", function () {
+    it("should remove a sale", async function () {
+      const res = {};
+      const req = { params: { id: 1 } };
+
+      res.status = sinon.stub().returns(res);
+      res.end = sinon.stub().returns();
+      sinon.stub(salesService, "removeSale").resolves({ type: null });
+
+      await salesController.removeSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+    });
+
+    it("fails if the saleId is invalid", async function () {
+      const res = {};
+      const req = { params: { id: invalidValue } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(salesService, "removeSale")
+        .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
+
+      await salesController.removeSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({
+        message: "Sale not found",
+      });
+    });
+  });
+
   afterEach(sinon.restore);
 });

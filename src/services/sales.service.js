@@ -18,8 +18,18 @@ const findSaleById = async (saleId) => {
   return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 };
 
+const removeSale = async (saleId) => {
+  const sale = await salesModel.findById(saleId);
+  if (sale) {
+    await salesModel.remove(saleId);
+    return { type: null };
+  }
+  return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+};
+
 module.exports = {
   newSaleRegistry,
   findAllSales,
   findSaleById,
+  removeSale,
 };

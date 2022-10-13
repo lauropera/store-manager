@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-10-11T23:11:33.561Z",
-    "modified": "2022-10-11T23:12:49.272Z",
+    "modified": "2022-10-13T20:01:07.466Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{}",
+      "raw": "{ \"name\": \"asdasd\"}",
       "form": []
     },
     "tests": []
@@ -42,11 +42,11 @@
     "colId": "history",
     "containerId": "",
     "name": "localhost:3000/sales/1",
-    "url": "localhost:3000/sales/999",
+    "url": "localhost:3000/sales/2",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-12T17:30:34.350Z",
-    "modified": "2022-10-13T17:24:09.734Z",
+    "modified": "2022-10-13T22:35:32.163Z",
     "headers": [],
     "params": [],
     "body": {
