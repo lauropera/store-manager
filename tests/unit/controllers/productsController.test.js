@@ -9,94 +9,147 @@ const {
   allProducts,
   newProductResponse,
   singleProduct,
+  editedProduct,
+  editedProductResponse,
+  invalidValue,
 } = require("../mocks/productsMock");
 
 const productsServices = require("../../../src/services/products.service.js");
 const productsController = require("../../../src/controllers/products.controller");
 
 describe("Unit tests from products controller", function () {
-  it("shows all products", async function () {
-    const res = {};
-    const req = {};
+  describe("searching for products", function () {
+    it("shows all products", async function () {
+      const res = {};
+      const req = {};
 
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    sinon
-      .stub(productsServices, "findAll")
-      .resolves({ type: null, message: allProducts });
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "findAll")
+        .resolves({ type: null, message: allProducts });
 
-    await productsController.listProducts(req, res);
+      await productsController.listProducts(req, res);
 
-    expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(allProducts);
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allProducts);
+    });
+
+    it("shows a product by his id", async function () {
+      const res = {};
+      const req = {
+        params: { id: 1 },
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "findById")
+        .resolves({ type: null, message: allProducts[0] });
+
+      await productsController.getProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allProducts[0]);
+    });
+
+    it("fails if the product does not exist", async function () {
+      const res = {};
+      const req = {
+        params: { id: 1 },
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "findById")
+        .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
+
+      await productsController.getProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({
+        message: "Product not found",
+      });
+    });
   });
 
-  it("shows a product by his id", async function () {
-    const res = {};
-    const req = {
-      params: { id: 1 },
-    };
+  describe("adding a new product", function () {
+    it("adds a new product successfully", async function () {
+      const res = {};
+      const req = { body: { ...singleProduct } };
 
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    sinon
-      .stub(productsServices, "findById")
-      .resolves({ type: null, message: allProducts[0] });
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "addNewProduct")
+        .resolves({ type: null, message: newProductResponse });
 
-    await productsController.getProduct(req, res);
+      await productsController.addNewProduct(req, res);
 
-    expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(allProducts[0]);
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(newProductResponse);
+    });
+
+    it("fails if the name does not exist", async function () {
+      const res = {};
+      const req = { body: {} };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "addNewProduct")
+        .resolves({ type: "MISSING_FIELD", message: '"name" is required' });
+
+      await productsController.addNewProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(400);
+      expect(res.json).to.have.been.calledWith({
+        message: '"name" is required',
+      });
+    });
   });
 
-  it("fails if the product does not exist", async function () {
-    const res = {};
-    const req = {
-      params: { id: 1 },
-    };
+  describe("editing a product", function () {
+    it("updates a product with success", async function () {
+      const res = {};
+      const req = {
+        body: { ...editedProduct },
+        params: { id: 1 },
+      };
 
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    sinon
-      .stub(productsServices, "findById")
-      .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "editProduct")
+        .resolves({ type: null, message: editedProductResponse });
 
-    await productsController.getProduct(req, res);
+      await productsController.editProduct(req, res);
 
-    expect(res.status).to.have.been.calledWith(404);
-    expect(res.json).to.have.been.calledWith({ message: "Product not found" });
-  });
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(editedProductResponse);
+    });
 
-  it("adds a new product successfully", async function () {
-    const res = {};
-    const req = { body: { ...singleProduct } };
+    it("fails if the productId is invalid", async function () {
+      const res = {};
+      const req = {
+        body: { ...editedProduct },
+        params: { id: invalidValue },
+      };
 
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    sinon
-      .stub(productsServices, "addNewProduct")
-      .resolves({ type: null, message: newProductResponse });
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "editProduct")
+        .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
 
-    await productsController.addNewProduct(req, res);
+      await productsController.editProduct(req, res);
 
-    expect(res.status).to.have.been.calledWith(201);
-    expect(res.json).to.have.been.calledWith(newProductResponse);
-  });
-
-  it("fails if the name does not exist", async function () {
-    const res = {};
-    const req = { body: {} };
-
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    sinon
-      .stub(productsServices, "addNewProduct")
-      .resolves({ type: "MISSING_FIELD", message: '"name" is required' });
-
-    await productsController.addNewProduct(req, res);
-
-    expect(res.status).to.have.been.calledWith(400);
-    expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({
+        message: "Product not found",
+      });
+    });
   });
 
   afterEach(sinon.restore);

@@ -6,6 +6,7 @@ const productsModel = require("../../../src/models/products.model.js");
 const {
   allProducts,
   singleProduct,
+  editedProduct,
 } = require("../mocks/productsMock");
 
 describe("Unit tests from products model", function () {
@@ -28,6 +29,13 @@ describe("Unit tests from products model", function () {
 
     const result = await productsModel.insert(singleProduct);
     expect(result).to.equal(1);
+  });
+
+  it('expects to edit a product', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const result = await productsModel.update(editedProduct);
+    expect(result).to.deep.equal({ affectedRows: 1 });
   });
 
   afterEach(sinon.restore);
