@@ -38,7 +38,7 @@ describe("Unit tests from sales service", function () {
 
   describe("removing a sale", function () {
     it("should remove a sale", async function () {
-      sinon.stub(salesModel, "findById").resolves(allSales[0]);
+      sinon.stub(salesModel, "findById").resolves(allSalesById);
       sinon.stub(salesModel, "remove").resolves({ affectedRows: 1 });
 
       const result = await salesServices.removeSale(1);
@@ -46,10 +46,10 @@ describe("Unit tests from sales service", function () {
     });
 
     it("fails if the saleId is invalid", async function () {
-      sinon.stub(salesModel, "findById").resolves(undefined);
+      sinon.stub(salesModel, "findById").resolves([]);
       sinon.stub(salesModel, "remove").resolves(undefined);
 
-      const result = await productsServices.removeSale(invalidValue);
+      const result = await salesServices.removeSale(invalidValue);
       expect(result.type).to.equal("SALE_NOT_FOUND");
       expect(result.message).to.equal("Sale not found");
     });

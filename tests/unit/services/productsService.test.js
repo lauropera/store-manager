@@ -97,8 +97,8 @@ describe("Unit tests from products service", function () {
     });
 
     it("fails if the productId is invalid", async function () {
-      sinon.stub(productsModel, "remove").resolves(undefined);
       sinon.stub(productsModel, "findById").resolves(undefined);
+      sinon.stub(productsModel, "remove").resolves(undefined);
 
       const result = await productsServices.removeProduct(invalidValue);
       expect(result.type).to.equal("PRODUCT_NOT_FOUND");

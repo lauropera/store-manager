@@ -61,16 +61,16 @@
     "colId": "history",
     "containerId": "",
     "name": "localhost:3000/sales/",
-    "url": "localhost:3000/sales/",
-    "method": "POST",
+    "url": "localhost:3000/sales/1",
+    "method": "DELETE",
     "sortNum": 0,
     "created": "2022-10-12T23:12:11.697Z",
-    "modified": "2022-10-12T23:40:38.942Z",
+    "modified": "2022-10-13T22:46:00.191Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "[\r\n  { \"productId\": 1, \"quantity\": 5 },\r\n  { \"productId\": 2, \"quantity\": 5 }\r\n]",
+      "raw": "[\n  { \"productId\": 1, \"quantity\": 5 },\n  { \"productId\": 2, \"quantity\": 5 }\n]",
       "form": []
     },
     "tests": []

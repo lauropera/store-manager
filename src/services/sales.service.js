@@ -20,7 +20,7 @@ const findSaleById = async (saleId) => {
 
 const removeSale = async (saleId) => {
   const sale = await salesModel.findById(saleId);
-  if (sale) {
+  if (sale && sale.length > 0) {
     await salesModel.remove(saleId);
     return { type: null };
   }
