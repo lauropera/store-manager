@@ -11,9 +11,9 @@ const {
   invalidProduct,
 } = require("../mocks/productsMock");
 
-describe("Service tests from products", function () {
+describe("Unit tests from products service", function () {
   describe("Searching for products", function () {
-    it("show all products", async function () {
+    it("shows all products", async function () {
       sinon.stub(productsModel, "findAll").resolves(allProducts);
 
       const result = await productsServices.findAll();
@@ -21,7 +21,7 @@ describe("Service tests from products", function () {
       expect(result.message).to.deep.equal(allProducts);
     });
 
-    it("show a product by his id", async function () {
+    it("shows a product by his id", async function () {
       sinon.stub(productsModel, "findById").resolves(allProducts[0]);
 
       const result = await productsServices.findById(1);

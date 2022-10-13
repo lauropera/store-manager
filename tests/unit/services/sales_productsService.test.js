@@ -12,10 +12,10 @@ const {
   salesWithoutQuantity,
   salesWithInvalidQuantity,
   newSaleResponse,
-  allSales,
-} = require("../mocks/salesMock");
+  allSalesProducts,
+} = require("../mocks/sales_productsMock");
 
-describe("Service tests from sales_products", function () {
+describe("Unit tests from sales_products service", function () {
   describe("creating a new sale with invalid values", function () {
     it("fails if one productId is invalid", async function () {
       sinon.stub(productsModel, "findById").resolves(undefined);
@@ -58,7 +58,7 @@ describe("Service tests from sales_products", function () {
 
   describe("creating a new sale with valid values", function () {
     it("creates a new sale successfully", async function () {
-      sinon.stub(productsModel, "findAll").resolves(allSales);
+      sinon.stub(productsModel, "findAll").resolves(allSalesProducts);
       sinon.stub(salesModel, "insert").resolves(1);
       sinon.stub(salesProductsModel, "insert").resolves(newSaleInformations);
       sinon.stub(salesProductsModel, "findById").resolves(newSaleResponse);
@@ -73,11 +73,11 @@ describe("Service tests from sales_products", function () {
 
   describe("finding for a sale", function () {
     it("finds a new sale", async function () {
-      sinon.stub(salesProductsModel, "findById").resolves(allSales[0]);
+      sinon.stub(salesProductsModel, "findById").resolves(allSalesProducts[0]);
 
       const result = await salesProductsService.findSaleById(1);
       expect(result.type).to.equal(null);
-      expect(result.message).to.equal(allSales[0]);
+      expect(result.message).to.equal(allSalesProducts[0]);
     });
 
     it("fails if the sale id is invalid", async function () {

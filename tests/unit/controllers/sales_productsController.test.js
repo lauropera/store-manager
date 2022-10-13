@@ -11,13 +11,13 @@ const {
   salesWithInvalidProducts,
   salesWithoutProductId,
   salesWithoutQuantity,
-  allSales,
-} = require("../mocks/salesMock");
+  allSalesProducts,
+} = require("../mocks/sales_productsMock");
 
 const salesProductsController = require("../../../src/controllers/sales_products.controller");
 const salesProductsService = require("../../../src/services/sales_products.service");
 
-describe("Controller tests from sales_products", function () {
+describe("Unit tests from sales_products controller", function () {
   describe("creating a new sale", function () {
     it("creates a new sale successfully", async function () {
       const res = {};
@@ -120,12 +120,12 @@ describe("Controller tests from sales_products", function () {
       res.json = sinon.stub().returns();
       sinon
         .stub(salesProductsService, "findSaleById")
-        .resolves({ type: null, message: allSales[0] });
+        .resolves({ type: null, message: allSalesProducts[0] });
 
       await salesProductsController.getSaleById(req, res);
 
       expect(res.status).to.have.been.calledWith(200);
-      expect(res.json).to.have.been.calledWith(allSales[0]);
+      expect(res.json).to.have.been.calledWith(allSalesProducts[0]);
     });
 
     it("fails if the sale id is invalid", async function () {

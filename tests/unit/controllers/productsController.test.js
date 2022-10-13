@@ -14,8 +14,8 @@ const {
 const productsServices = require("../../../src/services/products.service.js");
 const productsController = require("../../../src/controllers/products.controller");
 
-describe("Controller tests from products", function () {
-  it("show all products", async function () {
+describe("Unit tests from products controller", function () {
+  it("shows all products", async function () {
     const res = {};
     const req = {};
 
@@ -31,7 +31,7 @@ describe("Controller tests from products", function () {
     expect(res.json).to.have.been.calledWith(allProducts);
   });
 
-  it("show a product by his id", async function () {
+  it("shows a product by his id", async function () {
     const res = {};
     const req = {
       params: { id: 1 },
