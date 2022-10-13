@@ -31,10 +31,17 @@ describe("Unit tests from products model", function () {
     expect(result).to.equal(1);
   });
 
-  it('expects to edit a product', async function () {
-    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+  it("expects to edit a product", async function () {
+    sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
 
     const result = await productsModel.update(editedProduct);
+    expect(result).to.deep.equal({ affectedRows: 1 });
+  });
+
+  it("expects to remove a product", async function () {
+    sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+
+    const result = await productsModel.remove(allProducts[0].id);
     expect(result).to.deep.equal({ affectedRows: 1 });
   });
 

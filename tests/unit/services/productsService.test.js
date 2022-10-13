@@ -15,7 +15,7 @@ const {
 } = require("../mocks/productsMock");
 
 describe("Unit tests from products service", function () {
-  describe("Searching for products", function () {
+  describe("searching for products", function () {
     it("shows all products", async function () {
       sinon.stub(productsModel, "findAll").resolves(allProducts);
 
@@ -84,6 +84,25 @@ describe("Unit tests from products service", function () {
       expect(result.message).to.equal(
         '"name" length must be at least 5 characters long'
       );
+    });
+  });
+
+  describe("removing products", function () {
+    it("should remove a product", async function () {
+      sinon.stub(productsModel, "remove").resolves({ affectedRows: 1 });
+      sinon.stub(productsModel, "findById").resolves(allProducts[0]);
+
+      const result = await productsServices.removeProduct(allProducts[0].id);
+      expect(result.type).to.equal(null);
+    });
+
+    it("fails if the productId is invalid", async function () {
+      sinon.stub(productsModel, "remove").resolves(undefined);
+      sinon.stub(productsModel, "findById").resolves(undefined);
+
+      const result = await productsServices.removeProduct(invalidValue);
+      expect(result.type).to.equal("PRODUCT_NOT_FOUND");
+      expect(result.message).to.equal("Product not found");
     });
   });
 

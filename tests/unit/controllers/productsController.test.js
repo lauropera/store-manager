@@ -152,5 +152,38 @@ describe("Unit tests from products controller", function () {
     });
   });
 
+  describe("removing a product", function () {
+    it("should remove a product", async function () {
+      const res = {};
+      const req = { params: { id: 1 } };
+
+      res.status = sinon.stub().returns(res);
+      res.end = sinon.stub().returns();
+      sinon.stub(productsServices, "removeProduct").resolves({ type: null });
+
+      await productsController.removeProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+    });
+
+    it("fails if the productId is invalid", async function () {
+      const res = {};
+      const req = { params: { id: invalidValue } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "removeProduct")
+        .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
+
+      await productsController.removeProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({
+        message: "Product not found",
+      });
+    });
+  });
+
   afterEach(sinon.restore);
 });
