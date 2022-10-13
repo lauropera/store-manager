@@ -8,7 +8,7 @@ const {
   singleProduct,
 } = require("../mocks/productsMock");
 
-describe("Unit tests from products model", function () {
+describe("Model tests from products", function () {
   it("expects to show all products", async function () {
     sinon.stub(connection, "execute").resolves([allProducts]);
 

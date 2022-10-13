@@ -11,12 +11,13 @@ const {
   salesWithInvalidProducts,
   salesWithoutProductId,
   salesWithoutQuantity,
+  allSales,
 } = require("../mocks/salesMock");
 
 const salesProductsController = require("../../../src/controllers/sales_products.controller");
 const salesProductsService = require("../../../src/services/sales_products.service");
 
-describe("Controller tests from sales", function () {
+describe("Controller tests from sales_products", function () {
   describe("creating a new sale", function () {
     it("creates a new sale successfully", async function () {
       const res = {};
@@ -108,6 +109,40 @@ describe("Controller tests from sales", function () {
         message: '"quantity" must be greater than or equal to 1',
       });
     });
-    afterEach(sinon.restore);
   });
+
+  describe("searching for sales", function () {
+    it("finds a sale", async function () {
+      const res = {};
+      const req = { params: { id: 1 } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(salesProductsService, "findSaleById")
+        .resolves({ type: null, message: allSales[0] });
+
+      await salesProductsController.getSaleById(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allSales[0]);
+    });
+
+    it("fails if the sale id is invalid", async function () {
+      const res = {};
+      const req = { params: { id: 123123123 }};
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(salesProductsService, "findSaleById")
+        .resolves({ type: "SALE_NOT_FOUND", message: "Sale not found" });
+
+      await salesProductsController.getSaleById(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: "Sale not found" });
+    });
+  });
+  afterEach(sinon.restore);
 });

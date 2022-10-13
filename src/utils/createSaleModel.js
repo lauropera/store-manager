@@ -1,10 +1,6 @@
-const createSaleModel = (saleDetails) => {
-  const { saleId, productId, quantity } = saleDetails;
-  const sale = {
-    id: saleId,
-    itemsSold: [{ productId, quantity }],
-  };
-  return sale;
-};
+const createSaleModel = (saleId, saleDetails) => ({
+  id: saleId,
+  itemsSold: saleDetails,
+});
 
 module.exports = createSaleModel;

@@ -1,7 +1,8 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const productsModel = require('../../../src/models/products.model');
+const productsModel = require("../../../src/models/products.model");
+const salesModel = require("../../../src/models/sales.model");
 const salesProductsModel = require("../../../src/models/sales_products.model");
 const salesProductsService = require("../../../src/services/sales_products.service");
 const {
@@ -14,7 +15,7 @@ const {
   allSales,
 } = require("../mocks/salesMock");
 
-describe("Service tests from sales", function () {
+describe("Service tests from sales_products", function () {
   describe("creating a new sale with invalid values", function () {
     it("fails if one productId is invalid", async function () {
       sinon.stub(productsModel, "findById").resolves(undefined);
@@ -58,6 +59,7 @@ describe("Service tests from sales", function () {
   describe("creating a new sale with valid values", function () {
     it("creates a new sale successfully", async function () {
       sinon.stub(productsModel, "findAll").resolves(allSales);
+      sinon.stub(salesModel, "insert").resolves(1);
       sinon.stub(salesProductsModel, "insert").resolves(newSaleInformations);
       sinon.stub(salesProductsModel, "findById").resolves(newSaleResponse);
 
@@ -66,6 +68,24 @@ describe("Service tests from sales", function () {
       );
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(newSaleResponse);
+    });
+  });
+
+  describe("finding for a sale", function () {
+    it("finds a new sale", async function () {
+      sinon.stub(salesProductsModel, "findById").resolves(allSales[0]);
+
+      const result = await salesProductsService.findSaleById(1);
+      expect(result.type).to.equal(null);
+      expect(result.message).to.equal(allSales[0]);
+    });
+
+    it("fails if the sale id is invalid", async function () {
+      sinon.stub(salesProductsModel, "findById").resolves(undefined);
+
+      const result = await salesProductsService.findSaleById();
+      expect(result.type).to.equal("SALE_NOT_FOUND");
+      expect(result.message).to.equal("Sale not found");
     });
   });
 

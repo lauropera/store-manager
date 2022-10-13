@@ -5,7 +5,7 @@ const connection = require("../../../src/connection");
 const salesModel = require("../../../src/models/sales.model");
 const { saleDate, saleDateFromDB } = require("../mocks/salesMock");
 
-describe("Unit tests from sales model", function () {
+describe("Model tests from sales", function () {
   it("expects to find a sale by his id", async function () {
     sinon.stub(connection, "execute").resolves([[saleDateFromDB]]);
 

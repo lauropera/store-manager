@@ -1,5 +1,6 @@
 const productsModel = require('../models/products.model');
 const salesProductsModel = require('../models/sales_products.model');
+const createSaleModel = require('../utils/createSaleModel');
 const salesService = require('./sales.service');
 const { validateNewSale } = require('./validations/validationsInputValues');
 
@@ -25,17 +26,25 @@ const createNewSale = async (saleInformations) => {
 
   if (productsIdValidation) {
     const saleId = await salesService.newSaleRegistry();
-    const createAllSales = saleInformations.map((sale) =>
-    salesProductsModel.insert({ saleId, ...sale }));
-    
+    const createAllSales = saleInformations.map(async (sale) => {
+      await salesProductsModel.insert({ saleId, ...sale });
+    });
+
     await Promise.all(createAllSales);
-    const sale = await salesProductsModel.findById(saleId);
+    const sale = createSaleModel(saleId, saleInformations);
     return { type: null, message: sale };
   }
 
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
+const findSaleById = async (saleId) => {
+  const sale = await salesProductsModel.findById(saleId);
+  if (sale) return { type: null, message: sale };
+  return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+};
+
 module.exports = {
   createNewSale,
+  findSaleById,
 };

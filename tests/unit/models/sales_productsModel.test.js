@@ -9,7 +9,7 @@ const {
   formattedSale,
 } = require("../mocks/salesMock");
 
-describe("Unit tests from sales_products model", function () {
+describe("Model tests from sales_products", function () {
   it("expects to find a sale by his id", async function () {
     sinon.stub(connection, "execute").resolves([[saleFromDB]]);
 
