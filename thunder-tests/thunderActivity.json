@@ -42,11 +42,11 @@
     "colId": "history",
     "containerId": "",
     "name": "localhost:3000/sales/1",
-    "url": "localhost:3000/sales/2",
+    "url": "localhost:3000/sales/1",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-12T17:30:34.350Z",
-    "modified": "2022-10-13T22:35:32.163Z",
+    "modified": "2022-10-14T18:25:03.837Z",
     "headers": [],
     "params": [],
     "body": {

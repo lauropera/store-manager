@@ -19,7 +19,19 @@ const insert = async (saleInformations) => {
   return insertId;
 };
 
+const update = async (saleInformations) => {
+  const { quantity, saleId, productId } = saleInformations[0];
+  const [result] = await conn.execute(
+    `UPDATE StoreManager.sales_products
+    SET quantity = ?
+    WHERE sale_id = ? AND product_id = ?`,
+    [quantity, saleId, productId],
+  );
+  return result;
+};
+
 module.exports = {
   findById,
   insert,
+  update,
 };
