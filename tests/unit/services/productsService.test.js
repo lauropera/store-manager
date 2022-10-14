@@ -12,6 +12,7 @@ const {
   editedProduct,
   invalidProductIdEdit,
   invalidProductNameEdit,
+  specificProducts,
 } = require("../mocks/productsMock");
 
 describe("Unit tests from products service", function () {
@@ -38,6 +39,22 @@ describe("Unit tests from products service", function () {
       const result = await productsServices.findById(invalidValue);
       expect(result.type).to.equal("PRODUCT_NOT_FOUND");
       expect(result.message).to.equal("Product not found");
+    });
+
+    it("searching by a name", async function () {
+      sinon.stub(productsModel, "findByQuery").resolves(specificProducts);
+
+      const result = await productsServices.findProductByName("%martelo%");
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(specificProducts);
+    });
+
+    it("shows all products when the query is empty", async function () {
+      sinon.stub(productsModel, "findByQuery").resolves(allProducts);
+
+      const result = await productsServices.findProductByName();
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(allProducts);
     });
   });
 

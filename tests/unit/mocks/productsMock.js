@@ -25,6 +25,21 @@ const editedProduct = { id: 1, name: "Martelo do Batman" };
 const invalidProductIdEdit = { id: 999999, name: "Fantasia" };
 const invalidProductNameEdit = { id: 1, name: invalidValue };
 
+const specificProducts = [
+  {
+    id: 1,
+    name: "Martelo de Thor",
+  },
+  {
+    id: 2,
+    name: "Martelo",
+  },
+  {
+    id: 3,
+    name: "Martelo de ferro",
+  },
+];
+
 module.exports = {
   allProducts,
   invalidValue,
@@ -34,4 +49,5 @@ module.exports = {
   editedProduct,
   invalidProductIdEdit,
   invalidProductNameEdit,
+  specificProducts,
 };

@@ -7,6 +7,7 @@ const {
   allProducts,
   singleProduct,
   editedProduct,
+  specificProducts,
 } = require("../mocks/productsMock");
 
 describe("Unit tests from products model", function () {
@@ -43,6 +44,20 @@ describe("Unit tests from products model", function () {
 
     const result = await productsModel.remove(allProducts[0].id);
     expect(result).to.deep.equal({ affectedRows: 1 });
+  });
+
+  it("expects to return specific products by their names", async function () {
+    sinon.stub(connection, "execute").resolves([specificProducts]);
+
+    const result = await productsModel.findByQuery("%martelo%");
+    expect(result).to.deep.equal(specificProducts);
+  });
+
+  it("expects to return all products when the query is empty", async function () {
+    sinon.stub(connection, "execute").resolves([allProducts]);
+
+    const result = await productsModel.findByQuery();
+    expect(result).to.deep.equal(allProducts);
   });
 
   afterEach(sinon.restore);

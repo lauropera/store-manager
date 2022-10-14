@@ -12,6 +12,7 @@ const {
   editedProduct,
   editedProductResponse,
   invalidValue,
+  specificProducts,
 } = require("../mocks/productsMock");
 
 const productsServices = require("../../../src/services/products.service.js");
@@ -71,6 +72,42 @@ describe("Unit tests from products controller", function () {
       expect(res.json).to.have.been.calledWith({
         message: "Product not found",
       });
+    });
+
+    it("searching by a name", async function () {
+      const res = {};
+      const req = {
+        query: { q: "martelo" },
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "findProductByName")
+        .resolves({ type: null, message: specificProducts });
+
+      await productsController.findProductByName(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(specificProducts);
+    });
+
+    it("shows all products when the query is empty", async function () {
+      const res = {};
+      const req = {
+        query: { q: "" },
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon
+        .stub(productsServices, "findProductByName")
+        .resolves({ type: null, message: allProducts });
+
+      await productsController.findProductByName(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allProducts);
     });
   });
 
