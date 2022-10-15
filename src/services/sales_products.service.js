@@ -8,8 +8,7 @@ const doesProductsExist = async (productsToSale) => {
   const allProducts = await productsModel.findAll();
   const allProductsId = allProducts.map(({ id }) => id);
   const allProductsSaleId = productsToSale.map(({ productId }) => productId);
-  if (allProductsSaleId.every((id) => allProductsId.includes(id))) return true;
-  return false;
+  return allProductsSaleId.every((id) => allProductsId.includes(id));
 };
 
 const validateSale = (saleInformations) => {

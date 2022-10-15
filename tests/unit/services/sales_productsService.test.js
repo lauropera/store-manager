@@ -5,6 +5,7 @@ const productsModel = require("../../../src/models/products.model");
 const salesModel = require("../../../src/models/sales.model");
 const salesProductsModel = require("../../../src/models/sales_products.model");
 const salesProductsService = require("../../../src/services/sales_products.service");
+const { allProducts } = require('../mocks/productsMock');
 const {
   newSaleInformations,
   salesWithInvalidProducts,
@@ -20,7 +21,10 @@ const {
 describe("Unit tests from sales_products service", function () {
   describe("creating a new sale with invalid values", function () {
     it("fails if a productId is invalid", async function () {
+      sinon.stub(productsModel, "findAll").resolves(allProducts);
       sinon.stub(productsModel, "findById").resolves(undefined);
+      sinon.stub(salesModel, "insert").resolves(undefined);
+      sinon.stub(salesProductsModel, "insert").resolves(undefined);
 
       const result = await salesProductsService.createNewSale(
         salesWithInvalidProducts
@@ -93,6 +97,7 @@ describe("Unit tests from sales_products service", function () {
 
   describe("editing a sale", function () {
     it("should edit a product from a sale", async function () {
+      sinon.stub(productsModel, 'findAll').resolves(allProducts);
       sinon.stub(salesProductsModel, "findById").resolves(allSalesProducts[0]);
       sinon.stub(salesProductsModel, "update").resolves({ changedRows: 1 });
 
@@ -108,6 +113,7 @@ describe("Unit tests from sales_products service", function () {
     });
 
     it("fails if the sale does not exist", async function () {
+      sinon.stub(productsModel, 'findAll').resolves(allProducts);
       sinon.stub(salesProductsModel, "findById").resolves(undefined);
       sinon.stub(salesProductsModel, "update").resolves(undefined);
 
@@ -121,7 +127,8 @@ describe("Unit tests from sales_products service", function () {
     });
 
     it("fails if a productId is invalid", async function () {
-      sinon.stub(productsModel, "findById").resolves(newSaleResponse);
+      sinon.stub(productsModel, 'findAll').resolves(allProducts);
+      sinon.stub(salesProductsModel, "findById").resolves(newSaleResponse);
       sinon.stub(salesProductsModel, "update").resolves(undefined);
 
       const result = await salesProductsService.editSale(

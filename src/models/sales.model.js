@@ -28,7 +28,7 @@ const findById = async (saleId) => {
 
 const insert = async (saleDate) => {
   const [{ insertId }] = await conn.execute(
-    'INSERT INTO StoreManager.sales (date) VALUES (?)',
+    'INSERT INTO StoreManager.sales (date) VALUES (?);',
     [saleDate],
   );
   return insertId;
@@ -36,7 +36,7 @@ const insert = async (saleDate) => {
 
 const remove = async (saleId) => {
   const [result] = await conn.execute(
-    'DELETE FROM StoreManager.sales WHERE id = ?',
+    'DELETE FROM StoreManager.sales WHERE id = ?;',
     [saleId],
   );
   return result;
