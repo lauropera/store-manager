@@ -19,8 +19,8 @@ const insert = async (saleInformations) => {
   return insertId;
 };
 
-const update = async (saleInformations) => {
-  const { quantity, saleId, productId } = saleInformations[0];
+const update = async (saleId, saleInformations) => {
+  const { quantity, productId } = saleInformations;
   const [result] = await conn.execute(
     `UPDATE StoreManager.sales_products
     SET quantity = ?

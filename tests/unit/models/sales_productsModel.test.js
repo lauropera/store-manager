@@ -31,18 +31,12 @@ describe("Unit tests from sales_products model", function () {
     expect(result).to.equal(2);
   });
 
-  it("expects to edit a product from a sale", async function () {
+  it("expects to edit a sale", async function () {
     sinon.stub(connection, "execute").resolves([{ changedRows: 1 }]);
 
-    const result = await salesProductsModel.update(newSaleInformations);
+    const saleId = 1;
+    const result = await salesProductsModel.update(saleId, [newSaleInformations]);
     expect(result.changedRows).to.equal(1);
-  });
-
-  it("expects to edit two products from a sale", async function () {
-    sinon.stub(connection, "execute").resolves([{ changedRows: 2 }]);
-
-    const result = await salesProductsModel.update(newSaleInformations);
-    expect(result.changedRows).to.equal(2);
   });
 
   afterEach(sinon.restore);

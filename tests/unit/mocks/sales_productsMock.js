@@ -21,8 +21,8 @@ const newSaleResponse = {
 };
 
 const newSaleInformations = [
-  { saleId: 1, productId: 1, quantity: 3 },
-  { saleId: 1, productId: 2, quantity: 7 },
+  { productId: 1, quantity: 3 },
+  { productId: 2, quantity: 7 },
 ];
 
 const salesWithInvalidQuantity = [
@@ -49,6 +49,16 @@ const editedSaleResponse = {
   itemsUpdated: [
     {
       productId: 1,
+      quantity: 50,
+    },
+  ],
+};
+
+const saleWithTwoProductsEdited = {
+  saleId: 1,
+  itemsUpdated: [
+    {
+      productId: 1,
       quantity: 10,
     },
     {
@@ -57,6 +67,8 @@ const editedSaleResponse = {
     },
   ],
 };
+
+const saleId = 1;
 
 module.exports = {
   allSalesProducts,
@@ -71,4 +83,6 @@ module.exports = {
   saleFromDB,
   saleDateFromDB,
   editedSaleResponse,
+  saleWithTwoProductsEdited,
+  saleId,
 };
