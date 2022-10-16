@@ -15,8 +15,8 @@ const {
   editedSaleResponse,
 } = require("../mocks/sales_productsMock");
 
-const salesProductsController = require("../../../src/controllers/sales_products.controller");
-const salesProductsService = require("../../../src/services/sales_products.service");
+const { salesProductsController } = require("../../../src/controllers");
+const { salesProductsService } = require("../../../src/services");
 
 describe("Unit tests from sales_products controller", function () {
   describe("creating a new sale", function () {

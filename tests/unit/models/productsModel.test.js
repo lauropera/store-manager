@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 
 const connection = require("../../../src/connection");
-const productsModel = require("../../../src/models/products.model.js");
+const { productsModel } = require("../../../src/models");
 const {
   allProducts,
   singleProduct,

@@ -1,7 +1,6 @@
-const productsModel = require('../models/products.model');
-const salesProductsModel = require('../models/sales_products.model');
-const createSaleModel = require('../utils/createSaleModel');
+const { productsModel, salesProductsModel } = require('../models');
 const salesService = require('./sales.service');
+const createSaleModel = require('../utils/createSaleModel');
 const { validateNewSale } = require('./validations/validationsInputValues');
 
 const doesProductsExist = async (productsToSale) => {

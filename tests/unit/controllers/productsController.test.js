@@ -15,8 +15,8 @@ const {
   specificProducts,
 } = require("../mocks/productsMock");
 
-const productsServices = require("../../../src/services/products.service.js");
-const productsController = require("../../../src/controllers/products.controller");
+const { productsService } = require("../../../src/services");
+const { productsController } = require("../../../src/controllers");
 
 describe("Unit tests from products controller", function () {
   describe("searching for products", function () {
@@ -27,7 +27,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "findAll")
+        .stub(productsService, "findAll")
         .resolves({ type: null, message: allProducts });
 
       await productsController.listProducts(req, res);
@@ -45,7 +45,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "findById")
+        .stub(productsService, "findById")
         .resolves({ type: null, message: allProducts[0] });
 
       await productsController.getProduct(req, res);
@@ -63,7 +63,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "findById")
+        .stub(productsService, "findById")
         .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
 
       await productsController.getProduct(req, res);
@@ -83,7 +83,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "findProductByName")
+        .stub(productsService, "findProductByName")
         .resolves({ type: null, message: specificProducts });
 
       await productsController.findProductByName(req, res);
@@ -101,7 +101,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "findProductByName")
+        .stub(productsService, "findProductByName")
         .resolves({ type: null, message: allProducts });
 
       await productsController.findProductByName(req, res);
@@ -119,7 +119,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "addNewProduct")
+        .stub(productsService, "addNewProduct")
         .resolves({ type: null, message: newProductResponse });
 
       await productsController.addNewProduct(req, res);
@@ -135,7 +135,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "addNewProduct")
+        .stub(productsService, "addNewProduct")
         .resolves({ type: "MISSING_FIELD", message: '"name" is required' });
 
       await productsController.addNewProduct(req, res);
@@ -158,7 +158,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "editProduct")
+        .stub(productsService, "editProduct")
         .resolves({ type: null, message: editedProductResponse });
 
       await productsController.editProduct(req, res);
@@ -177,7 +177,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "editProduct")
+        .stub(productsService, "editProduct")
         .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
 
       await productsController.editProduct(req, res);
@@ -196,7 +196,7 @@ describe("Unit tests from products controller", function () {
 
       res.status = sinon.stub().returns(res);
       res.end = sinon.stub().returns();
-      sinon.stub(productsServices, "removeProduct").resolves({ type: null });
+      sinon.stub(productsService, "removeProduct").resolves({ type: null });
 
       await productsController.removeProduct(req, res);
 
@@ -210,7 +210,7 @@ describe("Unit tests from products controller", function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon
-        .stub(productsServices, "removeProduct")
+        .stub(productsService, "removeProduct")
         .resolves({ type: "PRODUCT_NOT_FOUND", message: "Product not found" });
 
       await productsController.removeProduct(req, res);

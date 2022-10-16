@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 const connection = require("../../../src/connection");
 
-const salesModel = require("../../../src/models/sales.model");
+const { salesModel } = require("../../../src/models");
 const { allSales, allSalesById, saleDate } = require("../mocks/salesMock");
 
 describe("Unit tests from sales model", function () {
@@ -26,7 +26,7 @@ describe("Unit tests from sales model", function () {
     const result = await salesModel.insert(saleDate);
     expect(result).to.equal(1);
   });
-  
+
   it("expects to remove a sale", async function () {
     sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
 

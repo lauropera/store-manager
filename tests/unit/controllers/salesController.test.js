@@ -5,8 +5,8 @@ const sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 const { expect } = chai;
 
-const salesController = require("../../../src/controllers/sales.controller");
-const salesService = require("../../../src/services/sales.service");
+const { salesController } = require("../../../src/controllers");
+const { salesService } = require("../../../src/services");
 const { allSalesById, allSales, invalidValue } = require("../mocks/salesMock");
 
 describe("Unit tests from sales controller", function () {

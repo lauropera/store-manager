@@ -1,4 +1,4 @@
-const salesModel = require('../models/sales.model');
+const { salesModel } = require('../models');
 const formatedTimestamp = require('../utils/formatedTimestamp');
 
 const newSaleRegistry = async () => {

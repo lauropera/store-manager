@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const productsModel = require("../../../src/models/products.model.js");
-const productsServices = require("../../../src/services/products.service.js");
+const { productsModel } = require("../../../src/models");
+const { productsService } = require("../../../src/services");
 const {
   allProducts,
   invalidValue,
@@ -20,7 +20,7 @@ describe("Unit tests from products service", function () {
     it("shows all products", async function () {
       sinon.stub(productsModel, "findAll").resolves(allProducts);
 
-      const result = await productsServices.findAll();
+      const result = await productsService.findAll();
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(allProducts);
     });
@@ -28,7 +28,7 @@ describe("Unit tests from products service", function () {
     it("shows a product by his id", async function () {
       sinon.stub(productsModel, "findById").resolves(allProducts[0]);
 
-      const result = await productsServices.findById(1);
+      const result = await productsService.findById(1);
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(allProducts[0]);
     });
@@ -36,7 +36,7 @@ describe("Unit tests from products service", function () {
     it("fails if the product does not exist", async function () {
       sinon.stub(productsModel, "findById").resolves(undefined);
 
-      const result = await productsServices.findById(invalidValue);
+      const result = await productsService.findById(invalidValue);
       expect(result.type).to.equal("PRODUCT_NOT_FOUND");
       expect(result.message).to.equal("Product not found");
     });
@@ -44,7 +44,7 @@ describe("Unit tests from products service", function () {
     it("searching by a name", async function () {
       sinon.stub(productsModel, "findByQuery").resolves(specificProducts);
 
-      const result = await productsServices.findProductByName("%martelo%");
+      const result = await productsService.findProductByName("%martelo%");
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(specificProducts);
     });
@@ -52,7 +52,7 @@ describe("Unit tests from products service", function () {
     it("shows all products when the query is empty", async function () {
       sinon.stub(productsModel, "findByQuery").resolves(allProducts);
 
-      const result = await productsServices.findProductByName();
+      const result = await productsService.findProductByName();
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(allProducts);
     });
@@ -63,13 +63,13 @@ describe("Unit tests from products service", function () {
       sinon.stub(productsModel, "insert").resolves([{ insertId: 1 }]);
       sinon.stub(productsModel, "findById").resolves(newProductResponse);
 
-      const result = await productsServices.addNewProduct(singleProduct);
+      const result = await productsService.addNewProduct(singleProduct);
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(newProductResponse);
     });
 
     it("fails if the name has invalid length", async function () {
-      const result = await productsServices.addNewProduct(invalidProduct);
+      const result = await productsService.addNewProduct(invalidProduct);
       expect(result.type).to.equal("INVALID_VALUE");
       expect(result.message).to.deep.equal(
         '"name" length must be at least 5 characters long'
@@ -82,7 +82,7 @@ describe("Unit tests from products service", function () {
       sinon.stub(productsModel, "update").resolves({ affectedRows: 1 });
       sinon.stub(productsModel, "findById").resolves(allProducts[0]);
 
-      const result = await productsServices.editProduct(editedProduct);
+      const result = await productsService.editProduct(editedProduct);
       expect(result.type).to.equal(null);
       expect(result.message).to.equal(editedProduct);
     });
@@ -91,13 +91,13 @@ describe("Unit tests from products service", function () {
       sinon.stub(productsModel, "update").resolves(undefined);
       sinon.stub(productsModel, "findById").resolves(undefined);
 
-      const result = await productsServices.editProduct(invalidProductIdEdit);
+      const result = await productsService.editProduct(invalidProductIdEdit);
       expect(result.type).to.equal("PRODUCT_NOT_FOUND");
       expect(result.message).to.equal("Product not found");
     });
 
     it("fails if the name is invalid", async function () {
-      const result = await productsServices.editProduct(invalidProductNameEdit);
+      const result = await productsService.editProduct(invalidProductNameEdit);
       expect(result.message).to.equal(
         '"name" length must be at least 5 characters long'
       );
@@ -109,7 +109,7 @@ describe("Unit tests from products service", function () {
       sinon.stub(productsModel, "remove").resolves({ affectedRows: 1 });
       sinon.stub(productsModel, "findById").resolves(allProducts[0]);
 
-      const result = await productsServices.removeProduct(allProducts[0].id);
+      const result = await productsService.removeProduct(allProducts[0].id);
       expect(result.type).to.equal(null);
     });
 
@@ -117,7 +117,7 @@ describe("Unit tests from products service", function () {
       sinon.stub(productsModel, "findById").resolves(undefined);
       sinon.stub(productsModel, "remove").resolves(undefined);
 
-      const result = await productsServices.removeProduct(invalidValue);
+      const result = await productsService.removeProduct(invalidValue);
       expect(result.type).to.equal("PRODUCT_NOT_FOUND");
       expect(result.message).to.equal("Product not found");
     });

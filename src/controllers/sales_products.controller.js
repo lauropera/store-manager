@@ -1,4 +1,4 @@
-const salesProductsService = require('../services/sales_products.service');
+const { salesProductsService } = require('../services');
 const errorMap = require('../utils/errorMap');
 
 const getSaleById = async (req, res) => {

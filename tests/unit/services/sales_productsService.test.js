@@ -1,11 +1,14 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const productsModel = require("../../../src/models/products.model");
-const salesModel = require("../../../src/models/sales.model");
-const salesProductsModel = require("../../../src/models/sales_products.model");
-const salesProductsService = require("../../../src/services/sales_products.service");
-const { allProducts } = require('../mocks/productsMock');
+const {
+  productsModel,
+  salesModel,
+  salesProductsModel,
+} = require("../../../src/models");
+const { salesProductsService } = require("../../../src/services");
+
+const { allProducts } = require("../mocks/productsMock");
 const {
   newSaleInformations,
   salesWithInvalidProducts,
@@ -97,7 +100,7 @@ describe("Unit tests from sales_products service", function () {
 
   describe("editing a sale", function () {
     it("should edit a product from a sale", async function () {
-      sinon.stub(productsModel, 'findAll').resolves(allProducts);
+      sinon.stub(productsModel, "findAll").resolves(allProducts);
       sinon.stub(salesProductsModel, "findById").resolves(allSalesProducts[0]);
       sinon.stub(salesProductsModel, "update").resolves({ changedRows: 1 });
 
@@ -113,7 +116,7 @@ describe("Unit tests from sales_products service", function () {
     });
 
     it("fails if the sale does not exist", async function () {
-      sinon.stub(productsModel, 'findAll').resolves(allProducts);
+      sinon.stub(productsModel, "findAll").resolves(allProducts);
       sinon.stub(salesProductsModel, "findById").resolves(undefined);
       sinon.stub(salesProductsModel, "update").resolves(undefined);
 
@@ -127,7 +130,7 @@ describe("Unit tests from sales_products service", function () {
     });
 
     it("fails if a productId is invalid", async function () {
-      sinon.stub(productsModel, 'findAll').resolves(allProducts);
+      sinon.stub(productsModel, "findAll").resolves(allProducts);
       sinon.stub(salesProductsModel, "findById").resolves(newSaleResponse);
       sinon.stub(salesProductsModel, "update").resolves(undefined);
 

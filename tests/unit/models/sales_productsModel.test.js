@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 const connection = require("../../../src/connection");
 
-const salesProductsModel = require("../../../src/models/sales_products.model");
+const { salesProductsModel } = require("../../../src/models");
 const {
   newSaleInformations,
   saleFromDB,
@@ -35,7 +35,9 @@ describe("Unit tests from sales_products model", function () {
     sinon.stub(connection, "execute").resolves([{ changedRows: 1 }]);
 
     const saleId = 1;
-    const result = await salesProductsModel.update(saleId, [newSaleInformations]);
+    const result = await salesProductsModel.update(saleId, [
+      newSaleInformations,
+    ]);
     expect(result.changedRows).to.equal(1);
   });
 

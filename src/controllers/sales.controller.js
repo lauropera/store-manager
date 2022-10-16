@@ -1,7 +1,7 @@
-const salesService = require('../services/sales.service');
+const { salesService } = require('../services');
 const errorMap = require('../utils/errorMap');
 
-const listAllSales = async (req, res) => {
+const listAllSales = async (_req, res) => {
   const { message } = await salesService.findAllSales();
   return res.status(200).json(message);
 };
