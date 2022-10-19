@@ -126,6 +126,11 @@ Agora podemos rodar os testes utilizando o comando abaixo no terminal do contain
 - JavaScript
 - Node.js
 - Express.js
+- DotEnv
+- Joi
+- Mocha.js
+- Chai.js
+- Sinon.js
 - MySQL
 - Docker
 
