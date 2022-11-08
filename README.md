@@ -8,10 +8,10 @@ Nesse projeto foi desenvolvido uma API RESTful utilizando a arquitetura MSC (mod
 
 #
 
-## 📚 Documentação
+## 🚀 Instalação e execução
 
 <details>
-<summary>Instalação e execução</summary>
+<summary>Instalando e executando</summary>
     <br />
   
 Clone o repositório:
