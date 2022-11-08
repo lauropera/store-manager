@@ -1,4 +1,4 @@
-# 🎤 Store Manager
+# 📦 Store Manager
 
 ## 📡 Desenvolvimento
 
@@ -11,7 +11,7 @@ Nesse projeto foi desenvolvido uma API RESTful utilizando a arquitetura MSC (mod
 ## 🚀 Instalação e execução
 
 <details>
-<summary>Instalando e executando</summary>
+<summary>Instalando e executando com docker</summary>
     <br />
   
 Clone o repositório:
@@ -22,7 +22,7 @@ git clone git@github.com:lauropera/store-manager.git
 
 Na raíz do projeto, suba os containers `store_manager` e `store_manager_db` utilizando o docker-compose.
 
-    docker-compose up -d
+    docker-compose up -d --build
 
 Abra o terminal do container `store_manager`.
 
