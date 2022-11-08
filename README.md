@@ -1,4 +1,4 @@
-# 🎤 Talker Manager
+# 🎤 Store Manager
 
 ## 📡 Desenvolvimento
 
