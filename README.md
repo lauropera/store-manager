@@ -8,44 +8,54 @@ Nesse projeto foi desenvolvido uma API RESTful utilizando a arquitetura MSC (mod
 
 #
 
+<br />
+
 ## 🚀 Instalação e execução
 
 <details>
-<summary>Instalando e executando com docker</summary>
-    <br />
-  
-Clone o repositório:
+<summary>Instalação e execução com Docker</summary>
+<br />
+
+Para rodar está aplicação é necessário ter **Git**, **Docker** e o **Docker Compose** instalados no seu computador. O Docker Compose precisa estar na versão **1.29** ou superior.
+
+### 1 - Clone o repositório:
 
 ```
 git clone git@github.com:lauropera/store-manager.git
 ```
 
-Na raíz do projeto, suba os containers `store_manager` e `store_manager_db` utilizando o docker-compose.
+### 2 - Na raíz do projeto, suba os containers `store_manager` e `store_manager_db` utilizando o docker-compose.
 
     docker-compose up -d --build
 
-Abra o terminal do container `store_manager`.
+### 3 - Abra o terminal do container `store_manager`.
 
     docker exec -it store_manager bash
 
-Uma vez no terminal do container, execute o comando `npm install`.
+### 4 - No terminal do container, instale as dependências com o comando:
 
-Para subir o servidor utilize o comando abaixo no terminal do container `store_manager`.
+    npm install
 
-    npm run debug
+### 5 - Agora execute os comandos para criar e popular o banco de dados:
 
-Para se conectar com o banco de dados, abra o terminal do container `store_manager_db`.
+Criando as tabelas
 
-    docker exec -it store_manager_db bash
+    npm run migration
 
-Faça login no banco de dados utilizando as credencias descritas no arquivo **docker-compose.yaml**. E execute os scripts **migration.sql** e **seed.sql** para a criação do banco **Store Manager**
+Populando o banco com dados
 
-Agora podemos rodar os testes utilizando o comando abaixo no terminal do container `store_manager`.
+    npm run seed
+    
+### 6 - Agora execute a aplicação com o comando:
+
+    npm start
+
+Para conferir a cobertura de testes execute o comando:
 
     npm run test:mocha
-
+    
 </details>
-  <br />
+<br />
 
 ## 🔎 Rotas
 
