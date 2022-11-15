@@ -138,11 +138,11 @@ Para conferir a cobertura de testes execute o comando:
 - Express.js
 - DotEnv
 - Joi
+- MySQL
+- Docker
 - Mocha.js
 - Chai.js
 - Sinon.js
-- MySQL
-- Docker
 
 ##
 
